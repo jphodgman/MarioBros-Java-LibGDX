@@ -113,11 +113,14 @@ public class Mario extends Sprite {
         fdef = new FixtureDef();
         shape = new CircleShape();
         shape.setRadius(6 / MarioBros.PPM);
+
+        fdef.filter.maskBits = MarioBros.DEFAULT_BIT | MarioBros.COIN_BIT | MarioBros.BRICK_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef);
 
         EdgeShape head = new EdgeShape();
         head.set(new Vector2(-2 / MarioBros.PPM, 6 / MarioBros.PPM), new Vector2(2 / MarioBros.PPM, 6 / MarioBros.PPM));
+        fdef.filter.categoryBits = MarioBros.MARIO_BIT;
         fdef.shape = head;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("head");
