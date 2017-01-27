@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -40,6 +41,7 @@ import static sun.audio.AudioPlayer.player;
 
 public class PlayScreen implements Screen {
     private MarioBros game;
+    private TextureAtlas atlas;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
     private Hud hud;
@@ -54,6 +56,7 @@ public class PlayScreen implements Screen {
     private Mario player;
 
     public PlayScreen(MarioBros game) {
+        atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
         gamecam = new OrthographicCamera();
         gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
@@ -69,7 +72,11 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         new B2WorldCreator(world, map);
-        player = new Mario(world);
+        player = new Mario(world, this);
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
     }
 
     @Override
@@ -89,6 +96,7 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         handleInput(dt);
         world.step(1/60f, 6, 2);
+        player.update(dt);
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.update();
         renderer.setView(gamecam);
@@ -102,9 +110,12 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         b2dr.render(world, gamecam.combined);
+        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
     }
 
     @Override
