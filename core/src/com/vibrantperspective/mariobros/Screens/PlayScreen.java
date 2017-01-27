@@ -29,6 +29,7 @@ import com.vibrantperspective.mariobros.MarioBros;
 import com.vibrantperspective.mariobros.Scenes.Hud;
 import com.vibrantperspective.mariobros.Sprites.Mario;
 import com.vibrantperspective.mariobros.Tools.B2WorldCreator;
+import com.vibrantperspective.mariobros.Tools.WorldContactListener;
 
 import javax.swing.text.View;
 
@@ -73,6 +74,8 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world, map);
         player = new Mario(world, this);
+
+        world.setContactListener(new WorldContactListener());
     }
 
     public TextureAtlas getAtlas() {
