@@ -1,4 +1,4 @@
-package com.vibrantperspective.mariobros.Sprites;
+package com.vibrantperspective.mariobros.Sprites.Enemies;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.vibrantperspective.mariobros.MarioBros;
 import com.vibrantperspective.mariobros.Screens.PlayScreen;
+import com.vibrantperspective.mariobros.Sprites.Mario;
 
 /**
  * Created by jph on 1/27/2017.
@@ -50,7 +50,7 @@ public class Goomba extends Enemy
             stateTime = 0;
         }
         else if(!destroyed) {
-            //b2body.setLinearVelocity(velocity);
+            b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
@@ -105,12 +105,12 @@ public class Goomba extends Enemy
         setToDestroy = true;
         MarioBros.manager.get("audio/sounds/stomp.wav", Sound.class).play();
     }
-/*
+
     @Override
     public void hitByEnemy(Enemy enemy) {
         if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.MOVING_SHELL)
             setToDestroy = true;
         else
             reverseVelocity(true, false);
-    }*/
+    }
 }

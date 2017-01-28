@@ -1,14 +1,12 @@
 package com.vibrantperspective.mariobros.Tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.vibrantperspective.mariobros.MarioBros;
-import com.vibrantperspective.mariobros.Sprites.Enemy;
-import com.vibrantperspective.mariobros.Sprites.InteractiveTileObject;
+import com.vibrantperspective.mariobros.Sprites.Enemies.Enemy;
 import com.vibrantperspective.mariobros.Sprites.Mario;
 
 /**
