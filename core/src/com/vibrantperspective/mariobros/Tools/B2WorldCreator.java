@@ -12,8 +12,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.vibrantperspective.mariobros.MarioBros;
 import com.vibrantperspective.mariobros.Screens.PlayScreen;
-import com.vibrantperspective.mariobros.Sprites.Brick;
-import com.vibrantperspective.mariobros.Sprites.Coin;
+import com.vibrantperspective.mariobros.Sprites.TileObjects.Brick;
+import com.vibrantperspective.mariobros.Sprites.TileObjects.Coin;
 
 /**
  * Created by jph on 1/25/2017.
