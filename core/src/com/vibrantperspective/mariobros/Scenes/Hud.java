@@ -23,10 +23,10 @@ public class Hud implements Disposable{
 
     private Integer worldTimer;
     private float timeCount;
-    private Integer score;
+    private static Integer score;
 
     Label countdownLabel;
-    Label scoreLabel;
+    static Label scoreLabel;
     Label timeLabel;
     Label levelLabel;
     Label worldLabel;
@@ -70,6 +70,11 @@ public class Hud implements Disposable{
             countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
         }
+    }
+
+    public static void addScore(Integer value) {
+        score += value;
+        scoreLabel.setText(String.format("%06d", score));
     }
 
     @Override
