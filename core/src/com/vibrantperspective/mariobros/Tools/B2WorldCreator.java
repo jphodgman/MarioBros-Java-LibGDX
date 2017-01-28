@@ -6,12 +6,15 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.vibrantperspective.mariobros.MarioBros;
 import com.vibrantperspective.mariobros.Screens.PlayScreen;
+import com.vibrantperspective.mariobros.Sprites.Enemies.Enemy;
+import com.vibrantperspective.mariobros.Sprites.Enemies.Goomba;
+import com.vibrantperspective.mariobros.Sprites.Enemies.Turtle;
 import com.vibrantperspective.mariobros.Sprites.TileObjects.Brick;
 import com.vibrantperspective.mariobros.Sprites.TileObjects.Coin;
 
@@ -20,55 +23,79 @@ import com.vibrantperspective.mariobros.Sprites.TileObjects.Coin;
  */
 
 public class B2WorldCreator {
+    private Array<Goomba> goombas;
+    private Array<Turtle> turtles;
 
-    public B2WorldCreator(PlayScreen screen) {
+    public B2WorldCreator(PlayScreen screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
+        //create body and fixture variables
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-        Fixture fixture;
 
-        //pull in all solid objects in tilemap
-
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        //create ground bodies/fixtures
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef = new BodyDef();
-            fdef = new FixtureDef();
-            shape = new PolygonShape();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth()/2) / MarioBros.PPM, (rect.getY() + rect.getHeight()/2) / MarioBros.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MarioBros.PPM, (rect.getY() + rect.getHeight() / 2) / MarioBros.PPM);
+
             body = world.createBody(bdef);
-            shape.setAsBox((rect.getWidth()/2)/ MarioBros.PPM, (rect.getHeight()/2) / MarioBros.PPM);
+
+            shape.setAsBox(rect.getWidth() / 2 / MarioBros.PPM, rect.getHeight() / 2 / MarioBros.PPM);
             fdef.shape = shape;
-            fixture = body.createFixture(fdef);
+            body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+        //create pipe bodies/fixtures
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef = new BodyDef();
-            fdef = new FixtureDef();
-            shape = new PolygonShape();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth()/2) / MarioBros.PPM, (rect.getY() + rect.getHeight()/2) / MarioBros.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MarioBros.PPM, (rect.getY() + rect.getHeight() / 2) / MarioBros.PPM);
+
             body = world.createBody(bdef);
-            shape.setAsBox((rect.getWidth()/2)/ MarioBros.PPM, (rect.getHeight()/2) / MarioBros.PPM);
+
+            shape.setAsBox(rect.getWidth() / 2 / MarioBros.PPM, rect.getHeight() / 2 / MarioBros.PPM);
             fdef.shape = shape;
             fdef.filter.categoryBits = MarioBros.OBJECT_BIT;
-            fixture = body.createFixture(fdef);
+            body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Brick(screen, rect);
+        //create brick bodies/fixtures
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            new Brick(screen, object);
         }
 
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        //create coin bodies/fixtures
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+
+            new Coin(screen, object);
+        }
+
+        //create all goombas
+        goombas = new Array<Goomba>();
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Coin(screen, rect);
+            goombas.add(new Goomba(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+        }
+        turtles = new Array<Turtle>();
+        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            turtles.add(new Turtle(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
         }
     }
+
+    public Array<Goomba> getGoombas() {
+        return goombas;
+    }
+    public Array<Enemy> getEnemies(){
+        Array<Enemy> enemies = new Array<Enemy>();
+        enemies.addAll(goombas);
+        enemies.addAll(turtles);
+        return enemies;
+    }
 }
+

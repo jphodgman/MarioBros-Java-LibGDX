@@ -16,7 +16,7 @@ import com.vibrantperspective.mariobros.Sprites.Mario;
  * Created by jph on 1/28/2017.
  */
 
-public class Turtle extends com.vibrantperspective.mariobros.Sprites.Enemies.Enemy {
+public class Turtle extends Enemy {
     public static final int KICK_LEFT = -2;
     public static final int KICK_RIGHT = 2;
     public enum State {WALKING, MOVING_SHELL, STANDING_SHELL}
@@ -136,7 +136,7 @@ public class Turtle extends com.vibrantperspective.mariobros.Sprites.Enemies.Ene
     }
 
     @Override
-    public void hitByEnemy(com.vibrantperspective.mariobros.Sprites.Enemies.Enemy enemy) {
+    public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
     }
 

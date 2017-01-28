@@ -5,9 +5,12 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.vibrantperspective.mariobros.MarioBros;
 import com.vibrantperspective.mariobros.Sprites.Enemies.Enemy;
+import com.vibrantperspective.mariobros.MarioBros;
+import com.vibrantperspective.mariobros.Sprites.Items.Item;
 import com.vibrantperspective.mariobros.Sprites.Mario;
+import com.vibrantperspective.mariobros.Sprites.Other.FireBall;
+import com.vibrantperspective.mariobros.Sprites.TileObjects.InteractiveTileObject;
 
 /**
  * Created by jph on 1/26/2017.
@@ -22,13 +25,13 @@ public class WorldContactListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef){
-            //case MarioBros.MARIO_HEAD_BIT | MarioBros.BRICK_BIT:
-            /*case MarioBros.MARIO_HEAD_BIT | MarioBros.COIN_BIT:
+            case MarioBros.MARIO_HEAD_BIT | MarioBros.BRICK_BIT:
+            case MarioBros.MARIO_HEAD_BIT | MarioBros.COIN_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.MARIO_HEAD_BIT)
                     ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
                 else
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
-                break;*/
+                break;
             case MarioBros.ENEMY_HEAD_BIT | MarioBros.MARIO_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
                     ((Enemy)fixA.getUserData()).hitOnHead((Mario) fixB.getUserData());
@@ -41,7 +44,7 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
                 break;
-           /* case MarioBros.MARIO_BIT | MarioBros.ENEMY_BIT:
+            case MarioBros.MARIO_BIT | MarioBros.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT)
                     ((Mario) fixA.getUserData()).hit((Enemy)fixB.getUserData());
                 else
@@ -68,7 +71,7 @@ public class WorldContactListener implements ContactListener {
                     ((FireBall)fixA.getUserData()).setToDestroy();
                 else
                     ((FireBall)fixB.getUserData()).setToDestroy();
-                break; */
+                break;
         }
     }
 
