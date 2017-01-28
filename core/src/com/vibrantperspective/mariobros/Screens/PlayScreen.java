@@ -21,6 +21,7 @@ import com.vibrantperspective.mariobros.Scenes.Hud;
 import com.vibrantperspective.mariobros.Sprites.Enemies.Enemy;
 import com.vibrantperspective.mariobros.Sprites.Items.Item;
 import com.vibrantperspective.mariobros.Sprites.Items.ItemDef;
+import com.vibrantperspective.mariobros.Sprites.Items.Mushroom;
 import com.vibrantperspective.mariobros.Sprites.Mario;
 import com.vibrantperspective.mariobros.Tools.B2WorldCreator;
 import com.vibrantperspective.mariobros.Tools.WorldContactListener;
